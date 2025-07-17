@@ -1,1 +1,57 @@
-body { margin: 0; padding: 0; background: #f4f4f4; font-family: sans-serif; }
+/* everything other than the books and buttons*/
+.bookstore-container {
+  padding: 50px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  background-color: blanchedalmond;
+  color:#523e2b;
+}
+
+/*the little corners */
+.book-list {
+  margin-top: 40px;
+  background-color: #857e6200;
+}
+
+/* these are the book boxes */
+.book-item {
+    box-shadow: 0 4px 16px #5f4e3390;
+  border: 2px solid #44351d;
+  border-radius: 12px;
+  color: #44351d;
+  background-color: #d6cb9d;
+}
+
+/* search */
+.bookstore-search-input {
+     box-shadow: 0 4px 16px #5f4e3390;
+  margin-right: 10px;
+  color: rgb(66, 53, 35) !important;
+  background-color:  #c1ae68c5 !important;
+}
+/* sort */
+.bookstore-sort-select {
+    margin-right: 10px;
+box-shadow: 0 4px 16px #5f4e3390;
+background-color: #c1ae68c5 !important;
+color: rgb(66, 53, 35) !important;
+}
+
+.review-section {
+  border-top: 1px solid #504228;
+  margin-top: 1rem;
+  padding-top: 1rem;
+ background-color: #d6cb9d;
+  border-radius: 8px;
+}
+.review-list {
+  margin-bottom: 1rem;
+  background-color:  #d6cb9d;
+}
+.review-form input,
+.review-form textarea,
+.review-form select {
+  font-size: 0.97rem;
+  color: black;
+  background-color:  #c1ae68c5;
+}
+ 
