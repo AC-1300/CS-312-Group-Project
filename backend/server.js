@@ -352,13 +352,38 @@ let books = [
 
 // Get all books
 app.get("/api/books", (req, res) => {
-  const { search = "", sort = "" } = req.query;
-  let filtered = books.filter(
-    (b) =>
-      b.title.toLowerCase().includes(search.toLowerCase()) ||
-      b.author.toLowerCase().includes(search.toLowerCase()) ||
-      b.genre.toLowerCase().includes(search.toLowerCase())
-  );
+  let { 
+    search = "", 
+    sort = "", 
+    genre ="",
+    minRating = 0,
+    maxRating = 5,
+    fromYear = "0",
+    toYear = "9999"
+  } = req.query;
+
+
+  const term = search.toLowerCase();
+
+  let filtered = books.filter(    (b) => {
+    const matchesSearch =
+      b.title.toLowerCase().includes(term) ||
+      b.author.toLowerCase().includes(term) ||
+      b.genre.toLowerCase().includes(term);
+  
+    const matchesGenre = genre ? b.genre.toLowerCase() === genre.toLowerCase() : true;
+
+    const matchesRating = 
+      (!minRating || b.rating >= parseFloat(minRating)) &&
+      (!maxRating || b.rating <= parseFloat(maxRating));
+
+    const matchesYear =
+      (!fromYear || parseInt(b.publicationDate) >= parseInt(fromYear)) &&
+      (!toYear || parseInt(b.publicationDate) <= parseInt(toYear));
+
+    return matchesSearch && matchesGenre && matchesRating && matchesYear;
+  });
+
 
   if (sort === "rating") {
     filtered.sort((a, b) => b.rating - a.rating);
@@ -377,6 +402,20 @@ app.get("/api/books/:id", (req, res) => {
   } else {
     res.status(404).json({ message: "Book not found" });
   }
+});
+
+// Auto suggestions - sydney
+app.get("/api/suggestions", (req, res) => {
+  const q = req.query.q?.toLowerCase() || "";
+  const suggestions = books
+    .filter(b =>
+      b.title.toLowerCase().includes(q) ||
+      b.author.toLowerCase().includes(q)
+    )
+    .map(b => b.title)
+    .filter((v, i, a) => a.indexOf(v) === i)
+    .slice(0,5);
+  res.json(suggestions);
 });
 
 //the review form 
