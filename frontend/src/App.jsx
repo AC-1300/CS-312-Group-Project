@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 
 export default function OnlineBookstore() {
+  const [genre, setGenre] = useState("");
+  const [minRating, setMinRating] = useState("");
+  const [maxRating, setMaxRating] = useState("");
+  const [fromYear, setFromYear] = useState("");
+  const [toYear, setToYear] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
@@ -9,11 +15,26 @@ export default function OnlineBookstore() {
 
   // Fetch books list based on search/sort from the backend 
   useEffect(() => {
+    const params = new URLSearchParams({
+      search, sort, genre, minRating, maxRating, fromYear, toYear
+    });
+	  
     fetch(`http://localhost:5000/api/books?search=${search}&sort=${sort}`)
       .then(res => res.json())
       .then(setBooks);
-  }, [search, sort]);
+  }, [search, sort, genre, minRating, maxRating, fromYear, toYear]);
 
+  // Search
+useEffect(() => {
+  if (search.length > 1) {
+    fetch(`http://localhost:5000/api/suggestions?q=${search}`)
+      .then(res => res.json())
+      .then(setSuggestions);
+  } else {
+    setSuggestions([]);
+  }
+}, [search]);
+	
   // Fetch reviews 
   const fetchReviews = (bookId) => {
     fetch(`http://localhost:5000/api/books/${bookId}/reviews`)
@@ -88,7 +109,68 @@ export default function OnlineBookstore() {
         <option value="rating">Rating</option>
         <option value="date">Publication Date</option>
       </select>
+	          <select value={genre} onChange={e => setGenre(e.target.value)}>
+        <option value="">All Genres</option>
+        <option value="Fiction">Fiction</option>
+        <option value="Dystopian">Dystopian</option>
+      </select> 
 
+      <input
+        type="number"
+        placeholder="Min Rating"
+        value={minRating}
+        onChange={e => setMinRating(e.target.value)}
+      />
+
+      <input
+        type="number"
+        placeholder="Max Rating"
+        value={maxRating}
+        onChange={e => setMaxRating(e.target.value)}
+      />
+
+      <input
+        type="number"
+        placeholder="From Year"
+        value={fromYear}
+        onChange={e => setFromYear(e.target.value)}
+      />
+
+      <input
+        type="number"
+        placeholder="To Year"
+        value={toYear}
+        onChange={e => setToYear(e.target.value)}
+      />
+      <button onClick={() => {
+        setSearch("");
+        setSort("");
+        setGenre("");
+        setMinRating("");
+        setMaxRating("");
+        setFromYear("");
+        setToYear("");
+      }}>
+        Clear Filters
+      </button>
+      <ul>
+        {suggestions.map((s, idx) => (
+          <li 
+            key={idx} 
+            onClick={() => {
+              setSearch(s)
+              setSuggestions([]);
+            }}
+            style={{
+              padding:"5px 10px",
+              cursor: "pointer",
+              borderBottom: "1px solid #eee"
+            }}
+            >
+              {s}
+            </li>
+        ))}
+      </ul>
 
        {/*loops through to make sure there is only one card per book*/}
       <div className="book-list row mt-3">
