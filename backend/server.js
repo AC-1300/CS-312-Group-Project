@@ -421,13 +421,13 @@ app.get("/api/suggestions", (req, res) => {
 //the review form 
 const reviews = {};
 
-// GET all reviews for a book
+// get all reviews for a book
 app.get('/api/books/:id/reviews', (req, res) => {
   const id = req.params.id;
   res.json(reviews[id] || []);
 });
 
-// POST a review for a book
+// post a review for a book
 app.post('/api/books/:id/reviews', (req, res) => {
   const id = req.params.id;
   const { username, rating, text } = req.body;
