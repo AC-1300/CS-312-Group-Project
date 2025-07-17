@@ -379,6 +379,39 @@ app.get("/api/books/:id", (req, res) => {
   }
 });
 
+//the review form 
+// In-memory review store: keys are book IDs, values are arrays of reviews
+const reviews = {};
+
+// GET all reviews for a book
+app.get('/api/books/:id/reviews', (req, res) => {
+  const id = req.params.id;
+  res.json(reviews[id] || []);
+});
+
+// POST a review for a book
+app.post('/api/books/:id/reviews', (req, res) => {
+  const id = req.params.id;
+  const { username, rating, text } = req.body;
+
+  if (!username || !rating || !text) {
+    return res.status(400).json({ message: "Missing username, rating, or text." });
+  }
+
+  const review = {
+    username,
+    rating: Number(rating),
+    text,
+    date: new Date().toISOString()
+  };
+
+  if (!reviews[id]) reviews[id] = [];
+  reviews[id].push(review);
+
+  res.json(review);
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
