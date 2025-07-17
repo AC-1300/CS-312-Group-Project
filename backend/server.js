@@ -380,7 +380,6 @@ app.get("/api/books/:id", (req, res) => {
 });
 
 //the review form 
-// In-memory review store: keys are book IDs, values are arrays of reviews
 const reviews = {};
 
 // GET all reviews for a book
