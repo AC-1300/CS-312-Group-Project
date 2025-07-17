@@ -96,7 +96,11 @@ export default function OnlineBookstore() {
           <div className="col-12 col-md-6 col-lg-4 mb-4" key={book.id}>
             <div className="card h-100 book-item">
               <div className="card-body">  {/*all the boook detials and UI*/}
-                <h5 className="card-title">{book.title}</h5>
+                <h5>
+				            <a href={book.link} target="_blank" rel="noopener noreferrer" style={{ color: "#1a0dab", textDecoration: "none" }}>
+					            {book.title}
+				          </a>
+			          </h5>
                 <h6 className="card-subtitle mb-2 text-muted">{book.author}</h6>
                 <p className="card-text mb-1"><strong>Genre:</strong> {book.genre}</p>
                 <p className="card-text mb-1"><strong>Rating:</strong> {book.rating}</p>
