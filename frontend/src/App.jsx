@@ -19,7 +19,7 @@ export default function OnlineBookstore() {
       search, sort, genre, minRating, maxRating, fromYear, toYear
     });
 	  
-    fetch(`http://localhost:5000/api/books?search=${search}&sort=${sort}`)
+    fetch(`http://localhost:5000/api/books?${params.toString()}`)
       .then(res => res.json())
       .then(setBooks);
   }, [search, sort, genre, minRating, maxRating, fromYear, toYear]);
@@ -109,50 +109,84 @@ useEffect(() => {
         <option value="rating">Rating</option>
         <option value="date">Publication Date</option>
       </select>
-	          <select value={genre} onChange={e => setGenre(e.target.value)}>
-        <option value="">All Genres</option>
-        <option value="Fiction">Fiction</option>
-        <option value="Dystopian">Dystopian</option>
-      </select> 
+      <div className="bookstore-filters">
+        <label>
+          Genre:
+	        <select value={genre} onChange={e => setGenre(e.target.value)}>
+            <option value="">All</option>
+            <option value="Fiction">Fiction</option>
+            <option value="Non-fiction">Non-Fiction</option>
+            <option value="Dystopian">Dystopian</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Romance">Romance</option>
+            <option value="Gothic">Gothic</option>
+            <option value="Philosophical Fiction">Philosophical Fiction</option>
+            <option value="Historical Fiction">Historical Fiction</option>
+            <option value="Fantasy">Fantasy</option>
+          </select> 
+        </label>
 
-      <input
-        type="number"
-        placeholder="Min Rating"
-        value={minRating}
-        onChange={e => setMinRating(e.target.value)}
-      />
+        <label>
+          Min Rating: 
+            <input
+              className="small-input"
+              type="number"
+              min="0"
+              max="5"
+              step="0.1"
+              value={minRating}
+              onChange={e => setMinRating(e.target.value)}
+            />
+        </label>
 
-      <input
-        type="number"
-        placeholder="Max Rating"
-        value={maxRating}
-        onChange={e => setMaxRating(e.target.value)}
-      />
+        <label>
+          Max Rating: 
+            <input
+              className="small-input"
+              type="number"
+              min="0"
+              max="5"
+              step="0.1"
+              value={maxRating}
+              onChange={e => setMaxRating(e.target.value)}
+            />
+        </label>
 
-      <input
-        type="number"
-        placeholder="From Year"
-        value={fromYear}
-        onChange={e => setFromYear(e.target.value)}
-      />
+        <label>
+          From Year:
+          <input
+            className="small-input"
+            type="number"
+            value={fromYear}
+            onChange={e => setFromYear(e.target.value)}
+          />
+        </label>
 
-      <input
-        type="number"
-        placeholder="To Year"
-        value={toYear}
-        onChange={e => setToYear(e.target.value)}
-      />
-      <button onClick={() => {
-        setSearch("");
-        setSort("");
-        setGenre("");
-        setMinRating("");
-        setMaxRating("");
-        setFromYear("");
-        setToYear("");
+        <label>
+          To Year:
+          <input
+            className="small-input"
+            type="number"
+            value={toYear}
+            onChange={e => setToYear(e.target.value)}
+          />
+        </label>
+
+      <button
+        className="clear-filters-button"
+        onClick={() => {
+          setSearch("");
+          setSort("");
+          setGenre("");
+          setMinRating("");
+          setMaxRating("");
+          setFromYear("");
+          setToYear("");
       }}>
+
         Clear Filters
       </button>
+      </div>
       <ul>
         {suggestions.map((s, idx) => (
           <li 
