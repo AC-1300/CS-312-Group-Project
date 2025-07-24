@@ -55,3 +55,55 @@ color: rgb(66, 53, 35) !important;
   background-color:  #c1ae68c5;
 }
  
+
+.bookstore-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  padding: 20px;
+  background-color: #e7d7a3;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px #5f4e3390;
+  border: 2px solid #44351d;
+}
+ 
+/* the labels in the filter section */
+.bookstore-filters label {
+  font-weight: bold;
+  margin-right: 5px;
+  color: #4c3b2b;
+}
+
+/* the input and other shared styles */
+.bookstore-filters input,
+.bookstore-filters select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #7b6c52;
+  background-color: #c1ae68c5;
+  color: rgb(66, 53, 35);
+  box-shadow: 0 2px 8px #5f4e3390;
+}
+
+.bookstore-filters .small-input {
+  width: 70px;
+}
+
+.clear-filters-button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: #a68c52;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 2px 8px #5f4e3390;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.clear-filters-button:hover {
+  background-color: #8f753e;
+}
